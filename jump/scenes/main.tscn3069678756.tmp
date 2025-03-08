@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqkdisey4pu1"]
+
+[ext_resource type="PackedScene" uid="uid://4pvr0d0isy4a" path="res://scenes/bg.tscn" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dvdthon6uqkc0" path="res://scenes/character_body_2d.tscn" id="2_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://cikrgv2c7ubbn" path="res://scenes/ground.tscn" id="3_tbgi4"]
+
+[sub_resource type="GDScript" id="GDScript_sugp2"]
+
+[node name="Main" type="Node"]
+script = SubResource("GDScript_sugp2")
+
+[node name="Bg" parent="." instance=ExtResource("1_sugp2")]
+scale = Vector2(3.01, 3.01)
+transform = Transform2D(3.01, 0, 0, 3.01, 0, 0)
+
+[node name="ground" parent="." instance=ExtResource("3_tbgi4")]
+position = Vector2(-16, 0)
+
+[node name="Dino" parent="." instance=ExtResource("2_jyhfs")]
+position = Vector2(104, 568)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
