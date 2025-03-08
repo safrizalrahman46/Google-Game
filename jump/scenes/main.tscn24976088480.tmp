@@ -13,14 +13,16 @@ const DINO_START_POS := Vector2i(150, 485)  # Dino's starting position
 const CAM_START_POS := Vector2i(576, 324)  # Camera's starting position
 
 var speed : float = START_SPEED
-const START_SPEED : float = 100.0  # Base speed
-const DINO_SPEED : float = 100.0  # Dino's speed
-const MAX_SPEED : float = 25
-var screen_size : Vector2i  # Max speed of the Dino and camera
+#const SPEED_SCALE : float = 100.0  # Adjust this to control the speed
+const START_SPEED : float = 100.0
+const DINO_START : float = 100.0
+const MAX_SPEED : float = 25  # Max speed of the Dino and camera
+
+#var screen_size : Vector2  # Store the screen size
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_window().size
+	#screen_size = get_viewport().size  # Get the screen size
 	new_game()
 
 func new_game():
@@ -33,16 +35,10 @@ func new_game():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	speed = START_SPEED
-	
-	# Make both Dino and Camera movement frame-rate independent
-	$Dino.position.x += DINO_SPEED * delta
+	run = DINO_START
+	$Dino.position.x += run
+	#$Camera2D.position.x += speed
 	$Camera2D.position.x += speed * delta
-	
-
-	# Check if the camera has moved far enough from the ground's current position
-	if $Camera2D.position.x - $Ground.position.x > screen_size.x * 1.5:
-		# Move the ground forward by screen_size.x to create a seamless scrolling effect
-		$Ground.position.x += screen_size.x
 "
 
 [node name="Main" type="Node"]
@@ -56,7 +52,7 @@ transform = Transform2D(3.01, 0, 0, 3.01, 0, 0)
 position = Vector2(-16, 0)
 
 [node name="Dino" parent="." instance=ExtResource("2_jyhfs")]
-position = Vector2(104, 576)
+position = Vector2(104, 568)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
