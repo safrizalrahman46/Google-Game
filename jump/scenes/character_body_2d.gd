@@ -15,6 +15,6 @@ func _physics_process(delta):
 		else:
 			$AnimatedSprite2D.play("run")
 	#else:
-		#$AnimatedSprite2D.play("jump")
+		#$AnimatedSprite2D.play("jump") 
 		
 	move_and_slide()

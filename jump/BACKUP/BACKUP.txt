@@ -1,11 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqkdisey4pu1"]
-
-[ext_resource type="PackedScene" uid="uid://4pvr0d0isy4a" path="res://scenes/bg.tscn" id="1_sugp2"]
-[ext_resource type="PackedScene" uid="uid://dvdthon6uqkc0" path="res://scenes/character_body_2d.tscn" id="2_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://cikrgv2c7ubbn" path="res://scenes/ground.tscn" id="3_tbgi4"]
-
-[sub_resource type="GDScript" id="GDScript_sugp2"]
-script/source = "extends Node
+extends Node
 
 # Game variables
 const DINO_START_POS := Vector2(150, 485)  # Starting position of the Dino
@@ -20,14 +13,14 @@ var screen_size : Vector2  # Store the screen size
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport().size  # Get the screen size of the viewport
-	if has_node(\"GroundContainer\"):
-		print(\"GroundContainer found!\")
-		if has_node(\"GroundContainer/Ground1\"):
-			print(\"Ground1 found!\")
+	if has_node("GroundContainer"):
+		print("GroundContainer found!")
+		if has_node("GroundContainer/Ground1"):
+			print("Ground1 found!")
 		else:
-			print(\"Ground1 not found!\")
+			print("Ground1 not found!")
 	else:
-		print(\"GroundContainer not found!\")
+		print("GroundContainer not found!")
 	new_game()
 
 func new_game():
@@ -35,7 +28,7 @@ func new_game():
 	$Dino.position = DINO_START_POS
 	$Dino.velocity = Vector2(0, 0)  # Assuming Dino has a velocity property
 	$Camera2D.position = CAM_START_POS
-	if has_node(\"GroundContainer\"):
+	if has_node("GroundContainer"):
 		$GroundContainer.position = Vector2(0, 0)  # Starting position of the ground
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,11 +42,11 @@ func _process(delta):
 	$Camera2D.position.x += speed * delta
 
 	# Move the ground and background
-	if has_node(\"GroundContainer\"):
+	if has_node("GroundContainer"):
 		$GroundContainer.position.x -= speed * delta
 
 		# Get ground width (assuming both Ground1 and Ground2 have the same width)
-		if has_node(\"GroundContainer/Ground1\"):
+		if has_node("GroundContainer/Ground1"):
 			var ground_width = $GroundContainer/Ground1.texture.get_width()
 			
 			# Loop ground
@@ -63,11 +56,11 @@ func _process(delta):
 				$GroundContainer/Ground2.position.x += ground_width * 2
 
 	# Check if BgContainer exists before accessing it
-	if has_node(\"BgContainer\"):
+	if has_node("BgContainer"):
 		$BgContainer.position.x -= speed * delta * 0.8  # Increased background speed
 
 		# Get background width (same logic as ground)
-		if has_node(\"BgContainer/Bg1\"):
+		if has_node("BgContainer/Bg1"):
 			var bg_width = $BgContainer/Bg1.texture.get_width()
 			
 			# Loop background
@@ -75,20 +68,3 @@ func _process(delta):
 				$BgContainer/Bg1.position.x += bg_width * 2
 			if $BgContainer/Bg2.position.x <= -bg_width:
 				$BgContainer/Bg2.position.x += bg_width * 2
-"
-
-[node name="Main" type="Node"]
-script = SubResource("GDScript_sugp2")
-
-[node name="Bg" parent="." instance=ExtResource("1_sugp2")]
-scale = Vector2(3.01, 3.01)
-transform = Transform2D(3.01, 0, 0, 3.01, 0, 0)
-
-[node name="GroundContainer" parent="." instance=ExtResource("3_tbgi4")]
-position = Vector2(160, -168)
-
-[node name="Dino" parent="." instance=ExtResource("2_jyhfs")]
-position = Vector2(136, 464)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576, 324)
